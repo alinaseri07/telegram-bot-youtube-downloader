@@ -1,5 +1,6 @@
 import os
 import telebot
+import hashlib
 from pytube import YouTube
 from dotenv import load_dotenv
 load_dotenv()
@@ -26,14 +27,14 @@ def function_name(message):
 
     bot.send_message(message.chat.id, 'Downloading...')
     stream = yt.streams.filter(progressive=True).order_by('resolution').last()
+    filename = hashlib.sha256()
     path = stream.download(output_path="downloads/",
-                           filename=stream.title + " - " + stream.resolution)
+                           filename=filename)
 
     video = open(path, 'rb')
     print(video)
     bot.send_video(message.chat.id, video, timeout=1000)
-    os.remove("./downloads/" + stream.title +
-              " - " + stream.resolution + ".mp4")
+    os.remove("./downloads/" + filename + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
 
