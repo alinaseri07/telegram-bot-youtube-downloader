@@ -1,6 +1,7 @@
 import os
-import telebot
 import uuid
+import requests
+import telebot
 from pytube import YouTube
 from dotenv import load_dotenv
 load_dotenv()
@@ -30,8 +31,11 @@ def function_name(message):
     path = stream.download(output_path="downloads/",
                            filename=filename)
 
-    video = open(path, 'rb')
-    bot.send_video(message.chat.id, video, timeout=5000)
+    # video = open(path, 'rb')
+    # bot.send_video(message.chat.id, video, timeout=5000)
+
+    url = 'https://api.telegram.org/'+TOKEN+'/sendVideo'
+    r = requests.post(url, data={'chat_id': message.chat.id}, files={"video": open(path, 'rb')})
     os.remove("./downloads/" + filename + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
