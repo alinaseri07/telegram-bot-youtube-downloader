@@ -33,7 +33,7 @@ def function_name(message):
 
         video = open(path, 'rb')
         print(video)
-        bot.send_document(message.chat.id, video, timeout=1000)
+        bot.send_video(message.chat.id, video, timeout=1000)
         os.remove("./downloads/" + stream.title +
                   " - " + stream.resolution + ".mp4")
 
