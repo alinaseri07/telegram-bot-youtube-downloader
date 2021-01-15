@@ -25,17 +25,15 @@ def function_name(message):
         return
 
     bot.send_message(message.chat.id, 'Downloading...')
-    streams = yt.streams.filter(progressive=True).order_by('resolution')
+    stream = yt.streams.filter(progressive=True).order_by('resolution').last()
+    path = stream.download(output_path="downloads/",
+                           filename=stream.title + " - " + stream.resolution)
 
-    for stream in streams:
-        path = stream.download(output_path="downloads/",
-                               filename=stream.title + " - " + stream.resolution)
-
-        video = open(path, 'rb')
-        print(video)
-        bot.send_video(message.chat.id, video, timeout=1000)
-        os.remove("./downloads/" + stream.title +
-                  " - " + stream.resolution + ".mp4")
+    video = open(path, 'rb')
+    print(video)
+    bot.send_video(message.chat.id, video, timeout=1000)
+    os.remove("./downloads/" + stream.title +
+              " - " + stream.resolution + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
 
