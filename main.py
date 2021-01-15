@@ -26,16 +26,17 @@ def function_name(message):
         return
 
     bot.send_message(message.chat.id, 'Downloading...')
-    stream = yt.streams.filter(progressive=True).order_by('resolution').last()
+    stream = yt.streams.filter(progressive=True).order_by('resolution').first()
     filename = uuid.uuid4().hex
     path = stream.download(output_path="downloads/",
                            filename=filename)
 
-    # video = open(path, 'rb')
-    # bot.send_video(message.chat.id, video, timeout=5000)
+    video = open(path, 'rb')
+    bot.send_video(message.chat.id, video, timeout=1000)
 
-    url = 'https://api.telegram.org/'+TOKEN+'/sendVideo'
-    r = requests.post(url, data={'chat_id': message.chat.id}, files={"video": open(path, 'rb')})
+    # url = 'https://api.telegram.org/'+TOKEN+'/sendVideo'
+    # r = requests.post(url, data={'chat_id': message.chat.id, "video": video})
+    # print(r.status_code)
     os.remove("./downloads/" + filename + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
