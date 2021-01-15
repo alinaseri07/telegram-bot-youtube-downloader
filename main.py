@@ -1,6 +1,6 @@
 import os
 import telebot
-import hashlib
+import uuid
 from pytube import YouTube
 from dotenv import load_dotenv
 load_dotenv()
@@ -27,7 +27,7 @@ def function_name(message):
 
     bot.send_message(message.chat.id, 'Downloading...')
     stream = yt.streams.filter(progressive=True).order_by('resolution').last()
-    filename = hashlib.sha256()
+    filename = uuid.uuid4().hex
     path = stream.download(output_path="downloads/",
                            filename=filename)
 
