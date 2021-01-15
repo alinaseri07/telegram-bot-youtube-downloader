@@ -17,7 +17,6 @@ def send_welcome(message):
 
 @bot.message_handler()
 def function_name(message):
-    print(message)
     streams = []
     try:
         yt = YouTube(message.text)
@@ -32,8 +31,7 @@ def function_name(message):
                            filename=filename)
 
     video = open(path, 'rb')
-    print(video)
-    bot.send_video(message.chat.id, video, timeout=1000)
+    bot.send_video(message.chat.id, video, timeout=5000)
     os.remove("./downloads/" + filename + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
