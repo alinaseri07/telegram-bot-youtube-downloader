@@ -32,11 +32,11 @@ def function_name(message):
                            filename=filename)
 
     video = open(path, 'rb')
-    bot.send_video(message.chat.id, video, timeout=1000)
+    try:
+        bot.send_video(message.chat.id, video, timeout=1000)
+    except:
+        bot.send_message(message.chat.id, 'File is too large')
 
-    # url = 'https://api.telegram.org/'+TOKEN+'/sendVideo'
-    # r = requests.post(url, data={'chat_id': message.chat.id, "video": video})
-    # print(r.status_code)
     os.remove("./downloads/" + filename + ".mp4")
 
     bot.send_message(message.chat.id, 'Done')
