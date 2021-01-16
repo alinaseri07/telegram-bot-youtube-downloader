@@ -33,7 +33,7 @@ def function_name(message):
 
     video = open(path, 'rb')
     try:
-        bot.send_video(message.chat.id, video, timeout=1000)
+        bot.send_document(message.chat.id, video, timeout=1000)
     except:
         bot.send_message(message.chat.id, 'File is too large')
 
