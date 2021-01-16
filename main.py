@@ -13,7 +13,7 @@ bot = telebot.TeleBot(TOKEN, parse_mode=None)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.reply_to(message, "Howdy, send my your youtube link?")
+    bot.reply_to(message, "Howdy, send me your youtube link plz")
 
 
 @bot.message_handler()
